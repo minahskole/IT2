@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>click the cat</title>
+    <link rel="stylesheet" href="../always.css">
+    <link rel="shortcut icon" href="../favicon.ico"/>
+
+</head>
+<style>
+    *{
+        cursor: url("paw.png") 15 12, default;
+    }
+    html, body {
+    margin: 0 !important;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    }
+        .bg {
+    /* The image used */
+    background-image: url("forest.jpg");
+    z-index: -1;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+    }
+    #cat{
+        position: absolute;
+        height: 20%;
+        width: auto;
+        transition-duration: 0.1s;
+    }
+    #cat::selection{
+        background: none;
+    }
+    button{  
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        border-radius: 10%;
+        width: 60px;
+        border-style: solid;
+        cursor: pointer;
+        background-color: lightgreen;
+        border-color: forestgreen;
+    }
+    div{
+        height: 100%;
+        width: auto;
+    }
+    
+</style>
+
+
+<body>
+    <div class="bg"></div>
+    <a href="../main.html"><button class="nav-button">Back</button></a>
+    <div>
+        <img id="cat" src="cat.png" alt="cat">
+    </div>  
+    <audio id="idlyd">
+        <source src="meow.wav" type="audio/mpeg">
+    </audio> 
+    <audio id="idlyd1">
+        <source src="meow1.wav" type="audio/mpeg">
+    </audio> 
+
+    <script>
+        let lyd = 1;
+        let left = 0;
+        
+        let winheight = window.innerHeight;
+        let winwidth = window.innerWidth;
+        catpic = document.querySelector("#cat");
+        left = (winwidth-2*winheight/15)*Math.random()+"px"; //random number in the range(0, windowwidth-width of the cat image)
+        //to prevent the cat from being outside the screen
+        catpic.style.left= left;
+        catpic.style.top=80*Math.random()+"%";
+
+        catpic.addEventListener("click", function(){
+            winheight = window.innerHeight;
+            winwidth = window.innerWidth;
+            //unngå at bildet blir helt eller delvis utenfor skjermen
+            left = (winwidth-2*winheight/15)*Math.random()+"px";
+            catpic.style.left= left;
+            catpic.style.top=80*Math.random()+"%"; //80% fordi bildets høyde er 20%
+            document.querySelector("#idlyd1").currentTime = 0;
+            document.querySelector("#idlyd").currentTime = 0;
+            
+            //veksle på hvilken lyd som spilles av, annenhver gang
+            if(lyd == 1){
+                document.querySelector("#idlyd").pause();
+                document.querySelector("#idlyd1").play();
+                lyd = 0;
+            }
+            else{
+                document.querySelector("#idlyd1").pause();
+                document.querySelector("#idlyd").play();
+                lyd = 1;
+            }
+            if(parseInt(left) > parseInt(winwidth-2*winheight/15)){move()};
+        })
+
+        window.addEventListener("resize", function(){
+            winheight = window.innerHeight;
+            winwidth = window.innerWidth;
+            console.log(parseInt(left));
+            console.log(parseInt(winwidth-2*winheight/15));
+            if(parseInt(left) > parseInt(winwidth-2*winheight/15)){move()};
+        });
+
+        function move(){
+            
+            winheight = window.innerHeight;
+            winwidth = window.innerWidth;
+            left = (winwidth-2*winheight/15)*Math.random()+"px";
+            catpic.style.left= left;
+            catpic.style.top=80*Math.random()+"%"; //80% fordi bildets høyde er 20%
+            if(parseInt(left) > parseInt(winwidth-2*winheight/15)){move()};
+        }
+
+
+    </script>
+</body>
+</html>
