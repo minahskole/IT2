@@ -1,3 +1,4 @@
+# removes all elements smaller than the prior element
 def stalinsort(li):
     i = 0
     while i < len(li)-1:
